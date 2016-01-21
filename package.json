@@ -1,0 +1,26 @@
+{
+  "name": "twitter_project",
+  "version": "1.0.0",
+  "description": "twitter profile API",
+  "main": "twitter.js",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "nel": "^0.1.0",
+    "q": "^1.4.1",
+    "request": "^2.65.0",
+    "restify": "4.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pbooth01/twitter_project.git"
+  },
+  "author": "Phillip Booth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pbooth01/twitter_project/issues"
+  },
+  "homepage": "https://github.com/pbooth01/twitter_project#readme"
+}
