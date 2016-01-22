@@ -17,6 +17,7 @@ var twitter = new Twitter(config);
 //Callback functions
 var error = function (err, response, body) {
   console.log('ERROR [%s]', err);
+  console.log(response);
 };
 
 var success = function (data) {
@@ -35,4 +36,49 @@ exports.tweetsTest = function(){
   });
 
   return df.promise;
-}
+};
+
+exports.getUsers = function(){
+  var df = Q.defer();
+
+  //
+  // relevance-based search interface to public user accounts on Twitter
+  //
+
+  twitter.getCustomApiCall('/users/search.json',{q:'pbooth',count: 10, include_entities: 'false'}, error, function(results){
+    console.log(results);
+    df.resolve(results);
+  });
+
+  return df.promise;
+};
+
+exports.getUserTimeline = function(){
+  var df = Q.defer();
+
+  //
+  //Returns a collection of the most recent Tweets posted by the user indicated by the
+  //
+
+  twitter.getUserTimeline({ screen_name: 'theemilylewis', count: '10'}, error, function(results){
+    console.log(results);
+    df.resolve(results);
+  });
+
+  return df.promise;
+};
+
+exports.getSingleUser = function(){
+  var df = Q.defer();
+
+  //
+  //Returns a collection of the most recent Tweets posted by the user indicated by the
+  //
+
+  twitter.getUser({ screen_name: 'theemilylewis'}, error, function(results){
+    console.log(results);
+    df.resolve(results);
+  });
+
+  return df.promise;
+};
