@@ -38,14 +38,14 @@ exports.tweetsTest = function(){
   return df.promise;
 };
 
-exports.getUsers = function(){
+exports.getUsers = function(searchString){
   var df = Q.defer();
 
   //
   // relevance-based search interface to public user accounts on Twitter
   //
 
-  twitter.getCustomApiCall('/users/search.json',{q:'pbooth',count: 10, include_entities: 'false'}, error, function(results){
+  twitter.getCustomApiCall('/users/search.json',{q:searchString,count: 5, include_entities: 'false'}, error, function(results){
     console.log(results);
     df.resolve(results);
   });
@@ -53,14 +53,14 @@ exports.getUsers = function(){
   return df.promise;
 };
 
-exports.getUserTimeline = function(){
+exports.getUserTimeline = function(searchString, retweetNumber){
   var df = Q.defer();
 
   //
   //Returns a collection of the most recent Tweets posted by the user indicated by the
   //
 
-  twitter.getUserTimeline({ screen_name: 'theemilylewis', count: '10'}, error, function(results){
+  twitter.getUserTimeline({ screen_name: searchString, count: '10'}, error, function(results){
     console.log(results);
     df.resolve(results);
   });
@@ -68,14 +68,14 @@ exports.getUserTimeline = function(){
   return df.promise;
 };
 
-exports.getSingleUser = function(){
+exports.getSingleUser = function(searchString){
   var df = Q.defer();
 
   //
   //Returns a collection of the most recent Tweets posted by the user indicated by the
   //
 
-  twitter.getUser({ screen_name: 'theemilylewis'}, error, function(results){
+  twitter.getUser({ screen_name: searchString}, error, function(results){
     console.log(results);
     df.resolve(results);
   });

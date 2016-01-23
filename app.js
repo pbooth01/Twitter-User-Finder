@@ -21,7 +21,9 @@ angular.module('twitterApp', [])
     }
 
     $scope["submit"] = function(){
-      console.log($scope["formInput"]);
+      TwitApi.getUserTimeline($scope["formInput"].search).then(function(data){
+        console.log(JSON.parse(data));
+      });
     }
 
   })

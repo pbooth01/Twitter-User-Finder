@@ -22,8 +22,9 @@ var RestServer = {
 
   getPotentialUsers: function(req, res, next){
 
-    //params will be passed in from req
-    twitter.getUsers()
+    var searchString = req.params.searchString;
+
+    twitter.getUsers(searchString)
       .then(function(data){
         res.send(data);
         next();
@@ -36,8 +37,10 @@ var RestServer = {
 
   getUserTimeline: function(req, res, next){
 
-    //params will be passed in from req
-    twitter.getUserTimeline()
+    var searchString = req.params.searchString;
+    var retweetNumber = req.params.retweetNumber;
+
+    twitter.getUserTimeline(searchString, retweetNumber)
       .then(function(data){
         res.send(data);
         next();
@@ -50,8 +53,9 @@ var RestServer = {
 
   getSingleUser: function(req, res, next){
 
-    //params will be passed in from req
-    twitter.getSingleUser()
+    var searchString = req.params.searchString;
+
+    twitter.getSingleUser(searchString)
       .then(function(data){
         res.send(data);
         next();
@@ -75,9 +79,9 @@ server.use( restify.bodyParser() );
 restify.CORS.ALLOW_HEADERS.push('authorization');
 
 server.get('/tweetsTest', RestServer.gettweetscheck);
-server.get('/getPotentialUsers', RestServer.getPotentialUsers);
-server.get('/getSingleUser', RestServer.getSingleUser);
-server.get('/getUserTimeline', RestServer.getUserTimeline);
+server.get('/getPotentialUsers/:searchString', RestServer.getPotentialUsers);
+server.get('/getSingleUser/:searchString', RestServer.getSingleUser);
+server.get('/getUserTimeline/:searchString/:retweetNumber', RestServer.getUserTimeline);
 
 server.listen(9090, function() {
   console.log('%s listening at %s', server.name, server.url);
