@@ -1,11 +1,12 @@
 angular.module('twitterApp', [])
 
-  .directive('userdisplay', function($timeout){
+  .directive('userDropdown', function($timeout){
     return {
       restrict: 'E',
       replace: true,
       scope: {users: '='},
-      templateUrl: 'partials/userdisplay.html',
+      templateUrl: '/partials/userDropdown.html',
+      controller: 'userDropdownCtrl'
     };
   })
 
@@ -13,18 +14,52 @@ angular.module('twitterApp', [])
     return new TwitApi($http, $q, $rootScope);
   }])
 
-  .controller('formCtrl', function ($scope, TwitApi){
+  .factory('debounce', function($timeout, $q) {
+    return function(func, wait, immediate) {
+      var timeout;
+      var deferred = $q.defer();
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if(!immediate) {
+            deferred.resolve(func.apply(context, args));
+            deferred = $q.defer();
+          }
+        };
+        var callNow = immediate && !timeout;
+        if ( timeout ) {
+          $timeout.cancel(timeout);
+        }
+        timeout = $timeout(later, wait);
+        if (callNow) {
+          deferred.resolve(func.apply(context,args));
+          deferred = $q.defer();
+        }
+        return deferred.promise;
+      };
+    };
+  })
+
+  .controller('formCtrl', function ($scope, TwitApi, debounce){
+
     $scope["formInput"] = {
-      search: null,
+      search: '@',
       retweetnumber: null,
       retweetcheck: false
-    }
+    };
 
-    $scope["submit"] = function(){
-      TwitApi.getUserTimeline($scope["formInput"].search).then(function(data){
+    $scope["lookUpUsersDebounced"] = debounce(lookUpUsers, 2000, false);
+
+    function lookUpUsers(){
+      TwitApi.getPotentialUsers($scope["formInput"].search).then(function(data){
         console.log(JSON.parse(data));
+        $scope["userInfo"] = data;
       });
-    }
+    };
+  })
+  .controller('userDropdownCtrl', function ($scope, TwitApi){
+
 
   })
 ;
