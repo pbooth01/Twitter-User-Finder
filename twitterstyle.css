@@ -1,0 +1,18 @@
+.header{
+    background-image: url("images/twit-logo.jpg");
+    background-repeat: repeat-x;
+    height: 200px;
+}
+
+.form-header{
+    background-image: url("images/twitter-header.gif");
+    background-position:0px -60px;
+    height: 75px;
+}
+.input-left{
+    background-color: #00aced;
+}
+
+.twit-input-form{
+    padding: 10px;
+}

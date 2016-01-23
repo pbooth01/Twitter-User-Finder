@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Twitter User Finder Homepage</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="twitterstyle.css">
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+
+
+
+    <script src="TwitApi.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        window.baseUrl = "http://localhost:9090";
+        window.rotorobotBaseUrl = "//" + window.location.host + "/";
+    </script>
+</head>
+
+<body ng-app="twitterApp">
+<div class="container-fluid">
+    <div class="row header">
+        <div class="twit-logo"></div>
+    </div>
+    <div class="row content">
+        <div class="col-md-4 input-left">
+
+            <div class="form-header"></div>
+
+            <div ng-controller="formCtrl">
+                <form class="twit-input-form">
+
+                    <div class="form-group row">
+                        <div class="col-md-7">
+                            <label for="retweetInput">Retweet Number</label>
+                            <input ng-model="formInput.reetweetnumber" type="number" class="form-control" id="retweetInput" placeholder="Retweet Number" min="0">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="retweetInput">Filter by Retweets</label>
+                            <input ng-model="formInput.reetweetcheck" type="checkbox" id="retweet-checkbox">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Twitter Handle</label>
+                        <input ng-model="formInput.search" type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                    </div>
+
+                    <button ng-click="submit()" type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="col-md-8 display-right">
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
