@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="twitterstyle.css">
+    <!-- Carousel CSS -->
+    <link rel="stylesheet" href="/angular-carousel/carousel-3d.css">
 
+    <link rel="stylesheet" href="twitterstyle.css">
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -22,7 +24,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 
-
+    <!-- Carousel Scripts -->
+    <script src="/angular-carousel/angular-sanitize.js"></script>
+    <script src="/angular-carousel/angular-swipe.js"></script>
+    <script src="/angular-carousel/carousel-3d.js"></script>
 
     <script src="TwitApi.js"></script>
     <script src="app.js"></script>
@@ -34,46 +39,49 @@
 </head>
 
 <body ng-app="twitterApp">
-<div class="container-fluid">
-    <div class="row header">
-        <div class="twit-logo"></div>
-    </div>
-    <div class="row content">
-        <div class="col-md-4 input-left">
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="twit-logo"></div>
+        </div>
+        <div class="row content">
+            <div class="col-md-4 input-left">
 
-            <div class="form-header"></div>
-
-            <div ng-controller="formCtrl">
-
-                <form class="twit-input-form">
-                    <div class="form-group row">
-                        <div class="col-md-7">
-                            <label for="retweetInput">Retweet Number</label>
-                            <input ng-model="formInput.reetweetnumber" type="number" class="form-control" id="retweetInput" placeholder="Retweet Number" min="0">
-                        </div>
-                        <div class="col-md-5">
-                            <label for="retweetInput">Filter by Retweets</label>
-                            <input ng-model="formInput.reetweetcheck" type="checkbox" id="retweet-checkbox">
-                        </div>
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <h1>SEARCH</h1>
                     </div>
-                    <div class="form-group">
-                        <label for="twitterHandle">Twitter Handle</label>
-                        <input ng-model="formInput.search" type="text" class="form-control" id="twitterHandle"  value="@" placeholder="@" ng-change="lookUpUsersDebounced(formInput.search)">
+                    <div ng-controller="formCtrl">
+
+                        <form class="twit-input-form">
+                            <div class="form-group row">
+                                <div class="col-md-7">
+                                    <label for="retweetInput">Retweet Number</label>
+                                    <input ng-model="formInput.reetweetnumber" type="number" class="form-control" id="retweetInput" placeholder="Retweet Number" min="0">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="retweetInput">Filter by Retweets</label>
+                                    <input ng-model="formInput.reetweetcheck" type="checkbox" id="retweet-checkbox">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="twitterHandle">Twitter Handle</label>
+                                <input ng-model="formInput.search" type="text" class="form-control" id="twitterHandle"  value="@" placeholder="@" ng-change="lookUpUsersDebounced(formInput.search)">
+                            </div>
+
+                            <button ng-click="submit()" type="submit" class="btn btn-default">Filter</button>
+                        </form>
+                        <user-dropdown ng-if="userInfo" user-info="userInfo"></user-dropdown>
                     </div>
 
-                    <button ng-click="submit()" type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <user-dropdown ng-if="userInfo" users="userInfo"></user-dropdown>
+                </div>
 
             </div>
 
-        </div>
-
-        <div class="col-md-8 display-right">
-
+            <div class="col-md-8 display-right">
+                <carousel-wrapper></carousel-wrapper>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 

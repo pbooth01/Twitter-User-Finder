@@ -48,3 +48,7 @@ TwitApi.prototype.getSingleUser = function(searchString){
 TwitApi.prototype.getUserTimeline = function(searchString, retweetNumber){
   return this.makeRequest( this.getRequest("/getUserTimeline/" + searchString + "/" + retweetNumber) );
 };
+
+TwitApi.prototype.displayUser = function(user, timeline){
+  this._$rs.$broadcast('displayUser', {userdata: JSON.parse(user), timelineData: JSON.parse(timeline)});
+};

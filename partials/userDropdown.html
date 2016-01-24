@@ -1,7 +1,12 @@
-<ul>
-    <li user in users>
-        <div class="userImage">
-            <img src="{{user.profile_image_url}}" alt="{{user.name + profile}}">
+<ul class="list-unstyled">
+    <li class="user-list-item " ng-repeat="user in userInfo" ng-click="displayUser(user)">
+        <div class="user-image-list-item">
+            <img src="{{user.profile_image_url_https}}" alt="{{user.name}}">
+        </div>
+        <div class="screen-name-list-item">
+            @{{user.screen_name}}
+            <span class="spacer">|</span>
+            {{user.name}}
         </div>
     </li>
 </ul>

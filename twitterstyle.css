@@ -5,14 +5,98 @@
 }
 
 .form-header{
-    background-image: url("images/twitter-header.gif");
-    background-position:0px -60px;
-    height: 75px;
+    text-align: center;
+    text-size: 50px;
+    background-color:aliceblue;
+    border: solid;
+    border-color: #b6b6b6;
 }
+
 .input-left{
     background-color: #00aced;
+    padding: 10px;
 }
 
 .twit-input-form{
     padding: 10px;
+    background-color:aliceblue;
+    border: solid;
+    border-color: #b6b6b6;
 }
+
+.user-list-item{
+    background-color: aliceblue;
+    padding: 10px;
+    margin-left: 10px;
+    border-style: solid;
+    border-color: #b6b6b6;
+}
+
+.user-list-item:hover{
+    background-color: #00aced;
+}
+
+.user-image-list-item{
+    display: inline-block;
+}
+
+.screen-name-list-item{
+    margin-right: 5px;
+    font-weight: 600;
+    color: black;
+    display: inline-block;
+}
+
+.spacer{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: 900;
+}
+
+.carousel-directive-wrapper{
+    padding: 5px;
+    background-color: aliceblue;
+}
+
+.user-wrapper-image{
+    display: inline-block;
+}
+
+.user-wrapper-screen-name{
+    display: inline-block;
+    font-size: 47px;
+    font-weight: 600;
+    text-align: center;
+    width: 60%;
+}
+
+.user-wrapper-description{
+    display: block;
+    font-size: 15px;
+    text-align: left;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.slide-header{
+    color: #fff;
+    padding-left: 10px;
+}
+
+.slide-body{
+    background-color: aliceblue;
+    border: solid;
+    border-color: #b6b6b6;
+}
+
+.slide-body-text{
+    margin-left: 10px;
+    font-size: 15px;
+    color: #030201;
+}
+
+.slide-footer{
+    text-align: center;
+    color: #fff;
+}
+

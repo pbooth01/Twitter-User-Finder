@@ -6,8 +6,8 @@ var Twitter = require("twitter-node-client").Twitter;
 
 //Get this data from your twitter apps dashboard
 var config = {
-  "consumerKey": "ZeGhnvPzjm67yeYOLei9HUV3T",
-  "consumerSecret": "VDmNng9rNcv7pBEry4fd7lBo6UgQcAB0cCqtpIlJAcBc5eQriK",
+  "consumerKey": "HTBilPmnSEd8KM4SjJ43i6dL2",
+  "consumerSecret": "rEXriko46bpIEp1CFSu8q6tRFEEmDYuQCq59CHQHY9DOcqjltU",
   "accessToken": "3393127126-rlqwVACgOIs7GvezTxgwFlTp3Baq8DB9njpkqPj",
   "accessTokenSecret": "BtmgRuP4VN4WaJ5JsNqPMygRSgdM9XM3FJ55lhupHunD2"
 }
@@ -46,7 +46,7 @@ exports.getUsers = function(searchString){
   //
 
   twitter.getCustomApiCall('/users/search.json',{q:searchString,count: 5, include_entities: 'false'}, error, function(results){
-    console.log(results);
+    //console.log(results);
     df.resolve(results);
   });
 
@@ -60,7 +60,11 @@ exports.getUserTimeline = function(searchString, retweetNumber){
   //Returns a collection of the most recent Tweets posted by the user indicated by the
   //
 
-  twitter.getUserTimeline({ screen_name: searchString, count: '10'}, error, function(results){
+  if(searchString.indexOf("@") < 0){
+    searchString = "@" + searchString;
+  }
+
+  twitter.getCustomApiCall(('/statuses/user_timeline.json'),{screen_name: searchString, count: '10'}, error, function(results){
     console.log(results);
     df.resolve(results);
   });
@@ -74,6 +78,9 @@ exports.getSingleUser = function(searchString){
   //
   //Returns a collection of the most recent Tweets posted by the user indicated by the
   //
+  if(searchString.indexOf("@") < 0){
+    searchString = "@" + searchString;
+  }
 
   twitter.getUser({ screen_name: searchString}, error, function(results){
     console.log(results);
