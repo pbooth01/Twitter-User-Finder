@@ -46,9 +46,20 @@ TwitApi.prototype.getSingleUser = function(searchString){
 
 //Used to get tweet objects for a particular user. Takes in search string and a retweetnumber and returns a collection of tweet objects
 TwitApi.prototype.getUserTimeline = function(searchString, retweetNumber){
-  return this.makeRequest( this.getRequest("/getUserTimeline/" + searchString + "/" + retweetNumber) );
+  return this.makeRequest( this.getRequest("/getUserTimeline/" + searchString) );
 };
 
+//uses the rootscope to broadcast that user data is available for use in the carouselwrapper
 TwitApi.prototype.displayUser = function(user, timeline){
   this._$rs.$broadcast('displayUser', {userdata: JSON.parse(user), timelineData: JSON.parse(timeline)});
+};
+
+//uses thr rootscope to broadcast that a filtertweets button has been pushed in the form
+TwitApi.prototype.filterTweets = function(retweetNumber){
+  this._$rs.$broadcast('filterTweets', {retweetNumber: retweetNumber});
+};
+
+//uses thr rootscope to broadcast that a resettweets button has been pushed in the form
+TwitApi.prototype.resetTweets = function(){
+  this._$rs.$broadcast('resetTweets');
 };

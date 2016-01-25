@@ -24,23 +24,31 @@ var RestServer = {
 
     var searchString = req.params.searchString;
 
-    twitter.getUsers(searchString)
-      .then(function(data){
-        res.send(data);
-        next();
-      })
-      .catch(function(msg){
-        res.send(msg);
-        next();
-      });
+    console.log(searchString);
+
+    /*15 characters is the cap on a twitter users screen_name*/
+    if(searchString.length <= 15){
+      twitter.getUsers(searchString)
+        .then(function(data){
+          res.send(data);
+          next();
+        })
+        .catch(function(msg){
+          res.send([]);
+          next();
+        });
+    }else{
+      res.send([]);
+      next();
+    }
+
   },
 
   getUserTimeline: function(req, res, next){
 
     var searchString = req.params.searchString;
-    var retweetNumber = req.params.retweetNumber;
 
-    twitter.getUserTimeline(searchString, retweetNumber)
+    twitter.getUserTimeline(searchString)
       .then(function(data){
         res.send(data);
         next();
@@ -81,7 +89,7 @@ restify.CORS.ALLOW_HEADERS.push('authorization');
 server.get('/tweetsTest', RestServer.gettweetscheck);
 server.get('/getPotentialUsers/:searchString', RestServer.getPotentialUsers);
 server.get('/getSingleUser/:searchString', RestServer.getSingleUser);
-server.get('/getUserTimeline/:searchString/:retweetNumber', RestServer.getUserTimeline);
+server.get('/getUserTimeline/:searchString', RestServer.getUserTimeline);
 
 server.listen(9090, function() {
   console.log('%s listening at %s', server.name, server.url);

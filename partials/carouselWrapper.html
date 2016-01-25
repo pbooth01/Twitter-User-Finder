@@ -1,4 +1,4 @@
-<div class="carousel-directive-wrapper" ng-if="shouldShow">
+<div class="carousel-directive-wrapper" ng-if="user">
     <div class="wrapper-header">
         <div class="user-wrapper-image">
             <img src="{{user.profile_image_url_https}}" alt="{{user.name}}">
@@ -11,30 +11,34 @@
         </div>
     </div>
 
-    <carousel3d
-      ng-model="app.slides"
-      options="app.options"
-      on-selected-click="app.selectedClick(index)"
-      on-slide-change="app.slideChanged(index)"
-      on-last-slide="app.lastSlide(index)"
-      on-before-change="app.beforeChange(index)">
+    <div class="3D-carousel-wrapper" ng-if="shouldShow">
+        <carousel3d
+          ng-model="app.slides"
+          options="app.options"
+          on-selected-click="app.selectedClick(index)"
+          on-slide-change="app.slideChanged(index)"
+          on-last-slide="app.lastSlide(index)"
+          on-before-change="app.beforeChange(index)">
 
-      <carousel3d-slide ng-repeat="slide in app.slides track by $index" ng-style="{'background': slide.bg}">
-         <div class="carousel-slide">
-             <div class="slide-header">
-                <h3 ng-bind="slide.hashtags"></h3>
-             </div>
-             <div class="slide-body">
-                 <p class="slide-body-text" ng-bind="slide.caption"></p>
-             </div>
-             <div class="slide-footer">
-                 <i class="fa fa-heart fa-2x">{{slide.retweet_count}}</i>
-                 <span class="spacer"></span>
-                 <i class="fa fa-retweet fa-2x">{{slide.favorite_count}}</i>
-             </div>
+          <carousel3d-slide ng-repeat="slide in app.slides track by $index" ng-style="{'background': slide.bg}">
+             <div class="carousel-slide">
+                 <div class="slide-header">
+                    <h3 ng-bind="slide.hashtags"></h3>
+                 </div>
+                 <div class="slide-body">
+                     <p class="slide-body-text" ng-bind="slide.caption"></p>
+                 </div>
+                 <div class="slide-footer">
+                     <i class="fa fa-retweet fa-2x">{{slide.retweet_count}}</i>
+                     <span class="spacer"></span>
+                     <i class="fa fa-heart fa-2x">{{slide.favorite_count}}</i>
 
-         </div>
-      </carousel3d-slide>
+                 </div>
 
-    </carousel3d>
+             </div>
+          </carousel3d-slide>
+
+        </carousel3d>
+    </div>
+    <image-wrapper ng-if="app.slides.images" images="app.slides.images"></image-wrapper>
 </div>

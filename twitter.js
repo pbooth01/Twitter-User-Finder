@@ -45,7 +45,7 @@ exports.getUsers = function(searchString){
   // relevance-based search interface to public user accounts on Twitter
   //
 
-  twitter.getCustomApiCall('/users/search.json',{q:searchString,count: 5, include_entities: 'false'}, error, function(results){
+  twitter.getCustomApiCall('/users/search.json',{q:searchString, include_entities: 'false'}, error, function(results){
     //console.log(results);
     df.resolve(results);
   });
@@ -53,7 +53,7 @@ exports.getUsers = function(searchString){
   return df.promise;
 };
 
-exports.getUserTimeline = function(searchString, retweetNumber){
+exports.getUserTimeline = function(searchString){
   var df = Q.defer();
 
   //
@@ -64,7 +64,7 @@ exports.getUserTimeline = function(searchString, retweetNumber){
     searchString = "@" + searchString;
   }
 
-  twitter.getCustomApiCall(('/statuses/user_timeline.json'),{screen_name: searchString, count: '10'}, error, function(results){
+  twitter.getCustomApiCall(('/statuses/user_timeline.json'),{screen_name: searchString, count: '50'}, error, function(results){
     console.log(results);
     df.resolve(results);
   });

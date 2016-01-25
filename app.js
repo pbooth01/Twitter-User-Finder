@@ -19,6 +19,15 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
     };
   })
 
+  .directive('imageWrapper', function() {
+    return {
+      restrict: 'E',
+      scope: {images: '='},
+      templateUrl: '/partials/imageWrapper.html',
+      controller: 'imageWrapperCtrl'
+    };
+  })
+
   .factory('TwitApi', ["$http", "$q", "$rootScope", function($http, $q, $rootScope){
     return new TwitApi($http, $q, $rootScope);
   }])
@@ -58,25 +67,47 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
       retweetcheck: false
     };
 
-    $scope["lookUpUsersDebounced"] = debounce(lookUpUsers, 2000, false);
+    $scope["filter"] = function(retweetNumber){
+      TwitApi.filterTweets(retweetNumber);
+    };
+
+    $scope["reset"] = function(retweetNumber){
+      TwitApi.resetTweets(retweetNumber);
+    };
+
+    $scope["lookUpUsersDebounced"] = debounce(lookUpUsers, 400, false);
 
     function lookUpUsers(){
-      TwitApi.getPotentialUsers($scope["formInput"].search).then(function(data){
-        console.log(JSON.parse(data));
-        $scope["userInfo"] = JSON.parse(data);
-      });
+      if($scope["formInput"].search && $scope["formInput"].search != '@' && $scope["formInput"].search.length <= 15){
+        TwitApi.getPotentialUsers($scope["formInput"].search).then(function(data){
+          if(data){
+            $scope["userInfo"] = JSON.parse(data);
+          }
+        });
+      }else{
+        $scope["userInfo"] = [];
+      }
     };
   })
 
   .controller('userDropdownCtrl', function ($scope, TwitApi){
 
     $scope["displayUser"] = function(user){
-      console.log(user.screen_name);
       TwitApi.getSingleUser(user.screen_name).then(function(userObject){
         TwitApi.getUserTimeline(user.screen_name).then(function(userTimeline){
           TwitApi.displayUser(userObject, userTimeline);
         })
       });
+    }
+  })
+
+  .controller('imageWrapperCtrl', function ($scope){
+    //$scope["display"] = $scope["images"].length > 0 ? true : false;
+
+    if($scope["images"].length > 0){
+      $scope["display"] = true;
+    }else{
+      $scope["display"] = false;
     }
   })
 
@@ -87,7 +118,7 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
     $scope["shouldShow"] = false;
 
     $scope["app"].options = {
-      visible: 3,
+      visible: 5,
       perspective: 35,
       startSlide: 0,
       border: 0,
@@ -100,11 +131,9 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
 
     $scope.$on("displayUser", function(event, Data){
 
-     console.log(Data);
       $scope["shouldShow"] = false;
-      $scope["isLoading"] = true;
-
       $scope["app"].slides = [];
+      $scope["app"].slide_persist = [];
 
       Data.userdata.profile_image_url_https = Data.userdata.profile_image_url_https.replace(/normal/i, '200x200');
 
@@ -128,8 +157,40 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
           })
           .value();
 
-      $scope["isLoading"] = false;
-      $scope["shouldShow"] = true;
+      $scope["app"].slides.images = _(Data.timelineData)
+                                      .pluck("entities")
+                                      .pluck("media")
+                                      .remove(function(object){
+                                        return object != undefined || null;
+                                      })
+                                      .flatten()
+                                      .pluck("media_url_https")
+                                      .value();
+
+      $scope["app"].slide_persist_images = JSON.parse(JSON.stringify($scope["app"].slides.images));
+      $scope["app"].slide_persist = JSON.parse(JSON.stringify($scope["app"].slides));
+
+      if(Data.timelineData.length > 0){
+        $scope["shouldShow"] = true;
+      }
+    });
+
+    $scope.$on("filterTweets", function(event, Data){
+
+      if(Data.retweetNumber >= 0 && typeof(Data.retweetNumber)){
+        $scope["app"].slides = _($scope["app"].slide_persist)
+                                .filter(function(tweet){
+                                  return tweet.retweet_count == Data.retweetNumber;
+                                })
+                                .value();
+
+      }
+    });
+
+    $scope.$on("resetTweets", function(event){
+      if($scope["app"].slide_persist || $scope["app"].slide_persist > 0){
+        $scope["app"].slides = JSON.parse(JSON.stringify($scope["app"].slide_persist));
+      }
     });
 
   })

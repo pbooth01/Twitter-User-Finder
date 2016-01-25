@@ -13,8 +13,8 @@
 }
 
 .input-left{
-    background-color: #00aced;
     padding: 10px;
+
 }
 
 .twit-input-form{
@@ -22,6 +22,15 @@
     background-color:aliceblue;
     border: solid;
     border-color: #b6b6b6;
+}
+
+.filter-button{
+    margin-top: 25px;
+}
+
+.drop-down-list{
+    max-height: 225px;
+    overflow-y: scroll;
 }
 
 .user-list-item{
@@ -64,7 +73,7 @@
 
 .user-wrapper-screen-name{
     display: inline-block;
-    font-size: 47px;
+    font-size: 30px;
     font-weight: 600;
     text-align: center;
     width: 60%;
@@ -72,9 +81,10 @@
 
 .user-wrapper-description{
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     text-align: left;
     margin-left: 10px;
+    margin-top: 15px;
     font-style: italic;
 }
 
@@ -90,13 +100,29 @@
 }
 
 .slide-body-text{
+    margin-top: 3px;
     margin-left: 10px;
     font-size: 15px;
+    font-weight: 500;
     color: #030201;
 }
 
 .slide-footer{
     text-align: center;
     color: #fff;
+    margin-top: 5px;
+}
+
+.image-content-wrapper{
+    margin-top: 10px;
+}
+
+.image-collection-header {
+    background-color: #00aced;
+    height: 30px;
+}
+
+.image-in-collection{
+    float: left;
 }
 
