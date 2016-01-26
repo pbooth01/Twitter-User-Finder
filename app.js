@@ -94,9 +94,6 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
 
     $scope["displayUser"] = function(user){
 
-      /*Removes user dropdown on selection*/
-      $scope["userInfo"] = [];
-
       TwitApi.getSingleUser(user.screen_name).then(function(userObject){
         TwitApi.getUserTimeline(user.screen_name).then(function(userTimeline){
           TwitApi.displayUser(userObject, userTimeline);
