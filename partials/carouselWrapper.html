@@ -3,7 +3,7 @@
         <div class="user-wrapper-image">
             <img src="{{user.profile_image_url_https}}" alt="{{user.name}}">
         </div>
-        <div class="user-wrapper-screen-name">
+        <div class="user-wrapper-text">
             <span class="user-header-text">@{{user.screen_name}}</span>
             <div class="user-wrapper-description">
                 <span class="user-description-text">{{user.description}}</span>
@@ -23,7 +23,7 @@
           <carousel3d-slide ng-repeat="slide in app.slides track by $index" ng-style="{'background': slide.bg}">
              <div class="carousel-slide">
                  <div class="slide-header">
-                    <h3 ng-bind="slide.hashtags"></h3>
+                    <h4 ng-bind="slide.hashtags"></h4>
                  </div>
                  <div class="slide-body">
                      <p class="slide-body-text" ng-bind="slide.caption"></p>
@@ -40,5 +40,5 @@
 
         </carousel3d>
     </div>
-    <image-wrapper ng-if="app.slides.images" images="app.slides.images"></image-wrapper>
+    <image-wrapper ng-if="images" images="images"></image-wrapper>
 </div>

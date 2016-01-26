@@ -93,6 +93,10 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
   .controller('userDropdownCtrl', function ($scope, TwitApi){
 
     $scope["displayUser"] = function(user){
+
+      /*Removes user dropdown on selection*/
+      $scope["userInfo"] = [];
+
       TwitApi.getSingleUser(user.screen_name).then(function(userObject){
         TwitApi.getUserTimeline(user.screen_name).then(function(userTimeline){
           TwitApi.displayUser(userObject, userTimeline);
@@ -102,8 +106,6 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
   })
 
   .controller('imageWrapperCtrl', function ($scope){
-    //$scope["display"] = $scope["images"].length > 0 ? true : false;
-
     if($scope["images"].length > 0){
       $scope["display"] = true;
     }else{
@@ -117,13 +119,14 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
     $scope["app"].slides = [];
     $scope["shouldShow"] = false;
 
+    /*Carousel option information*/
     $scope["app"].options = {
       visible: 5,
       perspective: 35,
       startSlide: 0,
       border: 0,
       dir: 'ltr',
-      width: 360,
+      width: 330,
       height: 220,
       space: 220,
       controls: true
@@ -139,6 +142,7 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
 
       $scope["user"] = Data.userdata;
 
+      /*iterating through tweet data to pluck out relevant information*/
       _(Data.timelineData)
           .forEach(function(tweet){
 
@@ -157,7 +161,8 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
           })
           .value();
 
-      $scope["app"].slides.images = _(Data.timelineData)
+      /*iterating through tweet data to pluck out images*/
+      $scope["images"] = _(Data.timelineData)
                                       .pluck("entities")
                                       .pluck("media")
                                       .remove(function(object){
@@ -167,8 +172,9 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
                                       .pluck("media_url_https")
                                       .value();
 
-      $scope["app"].slide_persist_images = JSON.parse(JSON.stringify($scope["app"].slides.images));
+      /*Keeping a record of every tweet*/
       $scope["app"].slide_persist = JSON.parse(JSON.stringify($scope["app"].slides));
+
 
       if(Data.timelineData.length > 0){
         $scope["shouldShow"] = true;
@@ -177,7 +183,7 @@ angular.module('twitterApp', ['ngSanitize', 'angular-carousel-3d'])
 
     $scope.$on("filterTweets", function(event, Data){
 
-      if(Data.retweetNumber >= 0 && typeof(Data.retweetNumber)){
+      if(Data.retweetNumber >= 0 && typeof(Data.retweetNumber == 'number')){
         $scope["app"].slides = _($scope["app"].slide_persist)
                                 .filter(function(tweet){
                                   return tweet.retweet_count == Data.retweetNumber;

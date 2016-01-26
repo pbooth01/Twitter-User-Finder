@@ -4,6 +4,16 @@
     height: 200px;
 }
 
+/*******************End of header  ***********************/
+
+.input-left{
+    padding: 10px;
+
+}
+
+/******************End of Col-md-4 div*******************/
+
+
 .form-header{
     text-align: center;
     text-size: 50px;
@@ -12,10 +22,6 @@
     border-color: #b6b6b6;
 }
 
-.input-left{
-    padding: 10px;
-
-}
 
 .twit-input-form{
     padding: 10px;
@@ -27,6 +33,8 @@
 .filter-button{
     margin-top: 25px;
 }
+
+/*****************End of form ****************************/
 
 .drop-down-list{
     max-height: 225px;
@@ -62,6 +70,8 @@
     font-weight: 900;
 }
 
+/********************* End of user drop down ********************/
+
 .carousel-directive-wrapper{
     padding: 5px;
     background-color: aliceblue;
@@ -71,7 +81,7 @@
     display: inline-block;
 }
 
-.user-wrapper-screen-name{
+.user-wrapper-text{
     display: inline-block;
     font-size: 30px;
     font-weight: 600;
@@ -113,6 +123,8 @@
     margin-top: 5px;
 }
 
+/**********************End of Carousel wrapper*****************/
+
 .image-content-wrapper{
     margin-top: 10px;
 }
@@ -124,5 +136,17 @@
 
 .image-in-collection{
     float: left;
+}
+
+.image-in-collection{
+    max-width: 370px;
+}
+
+/****************** End of image wrapper*****************/
+
+@media screen and (max-width: 375px) {
+    .arrow-right, .arrow-left{
+        display: none;
+    }
 }
 
